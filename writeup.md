@@ -28,7 +28,7 @@ Here's an explanation of how the widget works:
 
 - During the data retrieval process, the widget displays a "Loading weather forecast..." message to inform the user that the weather data is being fetched.
 
-- Once the weather data is retrieved, the widget presents the information in a user-friendly format within the planner app's interface. This includes displaying the current weather conditions and the forecasted weather for the specified number of days (in this case, 3 days).
+- Once the weather data is retrieved, the widget presents the information in a user-friendly format within the planner app's interface. This includes displaying the current weather conditions and the forecasted weather for the specified number of days (in this case, 4 days).
 
 - The widget also shows the current location, which is extracted from the fetched weather data. The user can see the name of the city or location associated with the weather information.
 

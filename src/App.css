@@ -76,10 +76,52 @@
   top: 0px;
   left: 0px;
 }
+.refresh-button {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.refresh-button:hover {
+  color: #000;
+}
+
 
 select {
  background-color: #efaeae;
 }
+.weather-forecast-widget {
+  width: 400px; /* Set your desired fixed width */
+}
+
+.forecast-container {
+  /* Add the following CSS to make the container scrollable */
+  overflow-y: auto;
+  max-height: 400px; /* Adjust the max height as needed */
+}
+
+.forecast-items {
+  /* Add the following CSS to display items in a row */
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px; /* Add negative margin to compensate for item margins */
+}
+
+.forecast-item {
+  /* Add the following CSS to style each forecast item */
+  flex: 10 0 200px; /* Adjust the width as needed */
+  margin: 0px; /* Add margin between the items */
+}
+
+.forecast-scrollable {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
  
 /* Modal */
 .modal {

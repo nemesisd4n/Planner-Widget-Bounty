@@ -7,7 +7,7 @@ import TimerWidget from './widgets/TimerWidget';
 import CalendarWidget from './widgets/CalendarWidget';
 import WeatherForecastWidget from './widgets/MyCustomWidget';
 
- 
+
 function App() {
  const [widgets, setWidgets] = useState([
   { id: new Date().getTime(), component: <ClockWidget />, area: 'main-widget', name: "Date and Time" },
