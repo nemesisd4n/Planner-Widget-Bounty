@@ -6,16 +6,15 @@ const numOfDays = 4; // Number of days to display in the forecast
 export default function WeatherForecastWidget() {
   const [forecastData, setForecastData] = useState(null);
   const [location, setLocation] = useState(null);
+  const [currentTemperature, setCurrentTemperature] = useState(null);
+  const [currentPrecipitation, setCurrentPrecipitation] = useState(null); // New state for current precipitation
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [currentTemperature, setCurrentTemperature] = useState(null);
-  const [precipitationChance, setPrecipitationChance] = useState(null);
 
   const fetchWeatherData = async (latitude, longitude) => {
     try {
-      // Fetch forecast data
       const forecastResponse = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${apiKey}&units=M`);
       const forecastData = await forecastResponse.json();
 
@@ -26,7 +25,7 @@ export default function WeatherForecastWidget() {
         setForecastData(forecastData);
         setLocation(currentLocationData.data[0].city_name);
         setCurrentTemperature(currentLocationData.data[0].temp);
-        setPrecipitationChance(currentLocationData.data[0].precip);
+        setCurrentPrecipitation(currentLocationData.data[0].precip); // Set current precipitation
         setError(null);
       } else {
         setError('Error fetching weather data.');
@@ -58,11 +57,6 @@ export default function WeatherForecastWidget() {
     }
   }, []);
 
-  const formatDateTime = (dateTime) => {
-    const options = { hour: 'numeric', minute: 'numeric' };
-    return new Date(dateTime).toLocaleString('en-US', options);
-  };
-
   const formatDate = (date) => {
     const options = { weekday: 'short', month: 'short', day: 'numeric' };
     return new Date(date).toLocaleString('en-US', options);
@@ -72,12 +66,13 @@ export default function WeatherForecastWidget() {
     setIsLoading(true);
     setForecastData(null);
     setLocation(null);
+    setCurrentTemperature(null);
+    setCurrentPrecipitation(null); // Reset current precipitation
     setError(null);
-  
+
     if (latitude && longitude) {
-      fetchWeatherData(latitude, longitude); // Pass latitude and longitude when refreshing
+      fetchWeatherData(latitude, longitude);
     } else {
-      // If latitude and longitude are not available, attempt to fetch them again
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -101,27 +96,29 @@ export default function WeatherForecastWidget() {
       ) : error ? (
         <>
           <p>Error fetching weather forecast: {error}</p>
-          <button onClick={handleRefresh}>Retry</button>
+          <button onClick={handleRefresh} style={{ backgroundColor: 'gray', color: 'white',borderRadius:"5px",padding:"2px 5px" }}>Retry</button>
         </>
       ) : (
         <>
           {location && <p>Current Location: {location}</p>}
           {currentTemperature && <p>Current Temperature: {currentTemperature}°C</p>}
-          {precipitationChance && <p>Precipitation Chance: {precipitationChance}%</p>}
+          {/* {currentPrecipitation && <p>Current Precipitation: {currentPrecipitation}%</p>}  */}
+
           {forecastData ? (
             <div className="forecast-container">
-              {forecastData.data.slice(0, numOfDays).map((item, index) => (
-                <div className="forecast-item" key={index}>
-                  <div className="forecast-date-time">
-                    {formatDate(item.valid_date)} {formatDateTime(item.ts)}
+              {forecastData.data
+                .filter((item) => new Date(item.valid_date) > new Date()) // Filter out past dates
+                .slice(0, numOfDays)
+                .map((item, index) => (
+                  <div className="forecast-item" key={index}>
+                    <div className="forecast-date">{formatDate(item.valid_date)}</div>
+                    <img src={`https://www.weatherbit.io/static/img/icons/${item.weather.icon}.png`} alt="Weather Icon" className="forecast-icon" />
+                    <div className="forecast-desc">{item.weather.description}</div>
+                    <div className="forecast-temp">Temperature: {item.temp}°C</div>
+                    <div className="forecast-humidity">Humidity: {item.rh}%</div>
+                    <div className="forecast-precip">Precipitation: {item.precip}%</div>
                   </div>
-                  <img src={`https://www.weatherbit.io/static/img/icons/${item.weather.icon}.png`} alt="Weather Icon" className="forecast-icon" />
-                  <div className="forecast-desc">{item.weather.description}</div>
-                  <div className="forecast-temp">Temperature: {item.temp}°C</div>
-                  <div className="forecast-humidity">Humidity: {item.rh}%</div>
-                  <div className="forecast-precip">Precipitation: {item.precip}%</div>
-                </div>
-              ))}
+                ))}
             </div>
           ) : (
             <p>No weather forecast available.</p>

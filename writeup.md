@@ -69,7 +69,7 @@ Here's an explanation of how the code works:
 
    - If an error occurs during data retrieval, an error message is displayed.
    - If no error occurs, the current location and weather forecast information are displayed.
-   - The forecast data is mapped using the `map` function to generate forecast items, which display the date, time, weather icon, description, temperature, and humidity.
+   - The forecast data is mapped using the `map` function to generate forecast items, which display the date, weather icon, description, temperature, and humidity.
 
 7. To use this weather forecast widget in a planner app, you can simply include the `WeatherForecastWidget` component within the desired section or component of the app. When the component is rendered, it automatically fetches weather data based on the user's location and displays the forecast.
 

@@ -94,21 +94,27 @@ select {
  background-color: #efaeae;
 }
 .weather-forecast-widget {
-  width: 400px; /* Set your desired fixed width */
+  width: 400px; 
 }
 
 .forecast-container {
-  /* Add the following CSS to make the container scrollable */
+
   overflow-y: auto;
-  max-height: 400px; /* Adjust the max height as needed */
+  max-height: 400px;
 }
 
 .forecast-items {
-  /* Add the following CSS to display items in a row */
+  
   display: flex;
   flex-wrap: wrap;
-  margin: -10px; /* Add negative margin to compensate for item margins */
+  margin: -10px; 
 }
+
+.forecast-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
 
 .forecast-item {
   /* Add the following CSS to style each forecast item */
