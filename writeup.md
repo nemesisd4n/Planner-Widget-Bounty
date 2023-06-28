@@ -2,7 +2,7 @@
 
 The custom widget that' I have added on planner app is:
 
-- <strong>Weather Forecast Widget</strong>
+-  <strong>Weather Forecast Widget</strong>
 
 ## Reason to choose Weather Forecast Widget
 
