@@ -7,7 +7,7 @@ export default function WeatherForecastWidget() {
   const [forecastData, setForecastData] = useState(null);
   const [location, setLocation] = useState(null);
   const [currentTemperature, setCurrentTemperature] = useState(null);
-  const [currentPrecipitation, setCurrentPrecipitation] = useState(null); // New state for current precipitation
+  const [currentPrecipitation, setCurrentPrecipitation] = useState(null); 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [latitude, setLatitude] = useState(null);
@@ -25,7 +25,7 @@ export default function WeatherForecastWidget() {
         setForecastData(forecastData);
         setLocation(currentLocationData.data[0].city_name);
         setCurrentTemperature(currentLocationData.data[0].temp);
-        setCurrentPrecipitation(currentLocationData.data[0].precip); // Set current precipitation
+        setCurrentPrecipitation(currentLocationData.data[0].precip); 
         setError(null);
       } else {
         setError('Error fetching weather data.');
@@ -67,7 +67,7 @@ export default function WeatherForecastWidget() {
     setForecastData(null);
     setLocation(null);
     setCurrentTemperature(null);
-    setCurrentPrecipitation(null); // Reset current precipitation
+    setCurrentPrecipitation(null); 
     setError(null);
 
     if (latitude && longitude) {
@@ -107,7 +107,7 @@ export default function WeatherForecastWidget() {
           {forecastData ? (
             <div className="forecast-container">
               {forecastData.data
-                .filter((item) => new Date(item.valid_date) > new Date()) // Filter out past dates
+                .filter((item) => new Date(item.valid_date) > new Date()) 
                 .slice(0, numOfDays)
                 .map((item, index) => (
                   <div className="forecast-item" key={index}>
