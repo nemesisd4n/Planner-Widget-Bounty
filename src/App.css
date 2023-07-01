@@ -227,4 +227,28 @@ select {
   display: flex;
   flex-direction: row;
 }
+.location{
+  margin-bottom: 5px;
+}
+.retry-button {
+  background-color: gray;
+  color: white;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-top: 10px;
+}
+.current-temperature {
+  display: flex;
+  align-items: center;
+}
+
+.temperature-unit-select {
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+  color: white;
+  background-color: rgb(231, 195, 167);
+}
+
+
 
