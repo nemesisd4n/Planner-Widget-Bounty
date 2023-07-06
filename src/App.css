@@ -76,58 +76,6 @@
   top: 0px;
   left: 0px;
 }
-.refresh-button {
-  background-color: transparent;
-  border: none;
-  color: #333;
-  cursor: pointer;
-  font-size: 20px;
-  margin-left: 10px;
-}
-
-.refresh-button:hover {
-  color: #000;
-}
-
-
-select {
- background-color: #efaeae;
-}
-.weather-forecast-widget {
-  width: 400px; 
-}
-
-.forecast-container {
-
-  overflow-y: auto;
-  max-height: 400px;
-}
-
-.forecast-items {
-  
-  display: flex;
-  flex-wrap: wrap;
-  margin: -10px; 
-}
-
-.forecast-icon {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-
-
-.forecast-item {
-  /* Add the following CSS to style each forecast item */
-  flex: 10 0 200px; /* Adjust the width as needed */
-  margin: 0px; /* Add margin between the items */
-}
-
-.forecast-scrollable {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-}
-
  
 /* Modal */
 .modal {
@@ -198,16 +146,57 @@ select {
   border: 1px solid rgba(255, 255, 255, 0.18);
  
 }
+
+ /*Weather styling*/
+
+ .weather-forecast-widget {
+  width: 400px;
+  display: inline;
+  flex-wrap: nowrap;
+}
+select {
+  background-color: #efaeae;
+ }
  
-.widget-gallery-item-name{
+ .forecast-container {
+   overflow-y: auto;
+   max-height: 400px;
+ }
+
+.widget-title {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.weather-forecast-widget {
-  display: inline;
-  flex-wrap: nowrap;
+.location {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.weather-description {
+  margin-top: 10px;
+}
+
+.current-temperature {
+  margin-top: 5px;
+}
+
+.temperature-unit-select {
+  margin-left: 8px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #efaeae;
+}
+
+.current-humidity {
+  margin-top: 7px;
+}
+
+.forecast-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
 .forecast-item {
@@ -219,17 +208,31 @@ select {
   padding: 10px;
 }
 
+.forecast-date {
+  font-weight: bold;
+}
+
 .forecast-icon {
   width: 50px;
   height: 50px;
 }
-.forecast-container {
-  display: flex;
-  flex-direction: row;
+
+.forecast-desc {
+  margin-top: 8px;
 }
-.location{
-  margin-bottom: 5px;
+
+.forecast-temp {
+  margin-top: 8px;
 }
+
+.forecast-humidity {
+  margin-top: 8px;
+}
+
+.forecast-precipitation {
+  margin-top: 8px;
+}
+
 .retry-button {
   background-color: gray;
   color: white;
@@ -237,6 +240,7 @@ select {
   padding: 2px 5px;
   margin-top: 10px;
 }
+
 .current-temperature {
   display: flex;
   align-items: center;
@@ -248,6 +252,19 @@ select {
   margin-left: 10px;
   color: white;
   background-color: rgb(231, 195, 167);
+}
+
+.refresh-button {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.refresh-button:hover {
+  color: #000;
 }
 
 

@@ -8,6 +8,7 @@ export default function WeatherForecastWidget() {
   const [location, setLocation] = useState(null);
   const [currentTemperature, setCurrentTemperature] = useState(null);
   const [currentHumidity, setCurrentHumidity] = useState(null);
+  const [currentPrecipitation, setCurrentPrecipitation] = useState(null); // Added state for precipitation
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [latitude, setLatitude] = useState(null);
@@ -21,30 +22,31 @@ export default function WeatherForecastWidget() {
       const forecastResponse = await fetch(
         `https://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${apiKey}&units=M`
       );
-      const forecastData = await forecastResponse.json();
-
       const currentLocationResponse = await fetch(
         `https://api.weatherbit.io/v2.0/current?lat=${latitude}&lon=${longitude}&key=${apiKey}`
       );
-      const currentLocationData = await currentLocationResponse.json();
-
+  
       if (forecastResponse.ok && currentLocationResponse.ok) {
+        const forecastData = await forecastResponse.json();
+        const currentLocationData = await currentLocationResponse.json();
+  
         setForecastData(forecastData);
         setLocation(currentLocationData.data[0].city_name);
         setCurrentTemperature(currentLocationData.data[0].temp);
         setCurrentHumidity(currentLocationData.data[0].rh);
+        setCurrentPrecipitation(currentLocationData.data[0].precip);
         setCurrentWeatherDescription(currentLocationData.data[0].weather.description);
         setError(null);
       } else {
         setError('Error fetching weather data.');
       }
-      
     } catch (error) {
       setError(error.message);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -84,6 +86,7 @@ export default function WeatherForecastWidget() {
     setLocation(null);
     setCurrentTemperature(null);
     setCurrentHumidity(null);
+    setCurrentPrecipitation(null); // Reset precipitation state
     setError(null);
 
     if (latitude && longitude) {
@@ -106,7 +109,6 @@ export default function WeatherForecastWidget() {
 
   return (
     <div className="weather-forecast-widget">
-      {/* <h2>Weather Forecast</h2> */}
       {isLoading ? (
         <p>Loading weather forecast...</p>
       ) : error ? (
@@ -118,48 +120,51 @@ export default function WeatherForecastWidget() {
         </>
       ) : (
         <>
-          {location && <p className="location">Current Location: {location}</p>}
-           {currentWeatherDescription && <p>Current Weather: {currentWeatherDescription}</p>}
-          {currentTemperature && (
-  <p className="current-temperature">
-    Current Temperature: {convertTemperature(currentTemperature, temperatureUnit)}°{temperatureUnit} | Temperature Unit:
-    <select
-      className="temperature-unit-select"
-      value={temperatureUnit}
-      onChange={(e) => setTemperatureUnit(e.target.value)}
-    >
-      <option value="C">Celsius</option>
-      <option value="F">Fahrenheit</option>
-    </select>
-  </p>
-)}
+        <h2 className="widget-title">Weather Forecast</h2>
+        {location && <p className="location">Location: {location}</p>}
+        {currentWeatherDescription && <p className="weather-description">Weather: {currentWeatherDescription}</p>}
+        {currentTemperature && (
+          <p className="current-temperature">
+            Temperature: {convertTemperature(currentTemperature, temperatureUnit)}°{temperatureUnit} | Temperature Unit:
+            <select
+              className="temperature-unit-select"
+              value={temperatureUnit}
+              onChange={(e) => setTemperatureUnit(e.target.value)}
+            >
+              <option value="C">Celsius</option>
+              <option value="F">Fahrenheit</option>
+            </select>
+          </p>
+        )}
 
-          {currentHumidity && <p className="current-humidity">Current Humidity: {currentHumidity}%</p>}
-          {forecastData ? (
-            <div className="forecast-container">
-              {forecastData.data
-                .filter((item) => new Date(item.valid_date) > new Date())
-                .slice(0, numOfDays)
-                .map((item, index) => (
-                  <div className="forecast-item" key={index}>
-                    <div className="forecast-date">{formatDate(item.valid_date)}</div>
-                    <img
-                      src={`https://www.weatherbit.io/static/img/icons/${item.weather.icon}.png`}
-                      alt="Weather Icon"
-                      className="forecast-icon"
-                    />
-                    <div className="forecast-desc">{item.weather.description}</div>
-                    <div className="forecast-temp">
-                      Temperature: {convertTemperature(item.temp, temperatureUnit)}°{temperatureUnit}
-                    </div>
-                    <div className="forecast-humidity">Humidity: {item.rh}%</div>
+        {currentHumidity && <p className="current-humidity">Humidity: {currentHumidity}%</p>}
+        {/* {currentPrecipitation && <p className="current-precipitation">Current Precipitation: {currentPrecipitation}</p>} */}
+        {forecastData ? (
+          <div className="forecast-container">
+            {forecastData.data
+              .filter((item) => new Date(item.valid_date) > new Date())
+              .slice(0, numOfDays)
+              .map((item, index) => (
+                <div className="forecast-item" key={index}>
+                  <div className="forecast-date">{formatDate(item.valid_date)}</div>
+                  <img
+                    src={`https://www.weatherbit.io/static/img/icons/${item.weather.icon}.png`}
+                    alt="Weather Icon"
+                    className="forecast-icon"
+                  />
+                  <div className="forecast-desc">{item.weather.description}</div>
+                  <div className="forecast-temp">
+                    Temperature: {convertTemperature(item.temp, temperatureUnit)}°{temperatureUnit}
                   </div>
-                ))}
-            </div>
-          ) : (
-            <p>No weather forecast available.</p>
-          )}
-        </>
+                  <div className="forecast-humidity">Humidity: {item.rh}%</div>
+                  <div className="forecast-precipitation">Precipitation: {item.precip}%</div>
+                </div>
+              ))}
+          </div>
+        ) : (
+          <p>No weather forecast available.</p>
+        )}
+      </>
       )}
     </div>
   );
